@@ -22,12 +22,12 @@ class Installer:
 
     async def run(self) -> bool:
         service = GithubService()
-        attempt = 1
-
         if not service.configurated() or not service.authenticated():
+            attempt = 1
+
             while attempt <= 3 and not service.authenticated():
                 if not service.configurated() or (attempt > 1 and Confirm.ask("Restart configuration?")):
-                    if 1 == attempt:
+                    if attempt == 1:
                         console.print("This tool uses the Github API, which requires authentication.")
                         console.print("You can connect to Github with a login or a token")
 
@@ -36,7 +36,4 @@ class Installer:
                 await service.authenticate()
                 attempt += 1
 
-        if not service.configurated() or not service.authenticated():
-            return False
-
-        return True
+        return bool(service.configurated() and service.authenticated())

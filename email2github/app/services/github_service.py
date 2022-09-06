@@ -81,7 +81,7 @@ class GithubService:
         if not self.authenticated():
             await self.authenticate()
 
-        users = self.github.search_users("{} in:email".format(email.address))
+        users = self.github.search_users(f"{email.address} in:email")
 
         for user in users:
             email.user = user

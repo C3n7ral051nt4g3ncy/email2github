@@ -24,12 +24,7 @@ def update():
         asyncio.set_event_loop(loop)
         loop.run_until_complete(updater.download())
 
-    except SystemExit:
-        loop.run_until_complete(updater.stop())
-        loop.close()
-        exit(0)
-
-    except KeyboardInterrupt:
+    except (SystemExit, KeyboardInterrupt):
         loop.run_until_complete(updater.stop())
         loop.close()
         exit(0)

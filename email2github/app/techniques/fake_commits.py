@@ -30,7 +30,7 @@ class FakeCommits(AbstractHandler):
         with console.status("Spoofing email addresses…") as status:
             for email in emails:
                 self.repository.config(name=email.address, email=email.address)
-                self.repository.add(filename="{}.txt".format(email.address), content=email.address)
+                self.repository.add(filename=f"{email.address}.txt", content=email.address)
 
                 self.repository.commit(email.address)
 

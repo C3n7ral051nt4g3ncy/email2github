@@ -25,13 +25,13 @@ class Version:
     def __post_init__(self):
         t = self.name.split(".")
 
-        if 0 < len(t):
+        if len(t) > 0:
             self.major = t[0]
 
-        if 1 < len(t):
+        if len(t) > 1:
             self.minor = t[1]
 
-        if 2 < len(t):
+        if len(t) > 2:
             self.micro = t[2]
 
     def __eq__(self, other):
@@ -53,7 +53,7 @@ class Version:
         return ((self.major, self.minor, self.micro) >= (other.major, other.minor, other.micro))
 
     def __repr__(self):
-        return "%s.%s.%s" % (self.major, self.minor, self.micro)
+        return f"{self.major}.{self.minor}.{self.micro}"
 
 @dataclass
 class Updater:

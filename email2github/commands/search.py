@@ -29,12 +29,7 @@ def search(emails, output, quiet):
         asyncio.set_event_loop(loop)
         loop.run_until_complete(resolver.run(emails))
 
-    except SystemExit:
-        loop.run_until_complete(resolver.stop())
-        loop.close()
-        exit(0)
-
-    except KeyboardInterrupt:
+    except (SystemExit, KeyboardInterrupt):
         loop.run_until_complete(resolver.stop())
         loop.close()
         exit(0)

@@ -29,10 +29,7 @@ class AbstractHandler(ABC):
 
     @abstractmethod
     async def resolve(self, emails: List):
-        if self.next:
-            return await self.next.resolve(emails)
-
-        return None
+        return await self.next.resolve(emails) if self.next else None
 
     async def clean(self):
         pass

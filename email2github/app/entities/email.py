@@ -19,40 +19,31 @@ class Email(object):
     user   : NamedUser = None
 
     @classmethod
-    def load_from_file(self, path: str) -> List:
+    def load_from_file(cls, path: str) -> List:
         with open(path) as file:
-            emails = self.load(file.read().splitlines())
+            emails = cls.load(file.read().splitlines())
 
         return emails
 
     @classmethod
-    def load_from_string(self, string: str) -> List:
-        return self.load(string.split(","))
+    def load_from_string(cls, string: str) -> List:
+        return cls.load(string.split(","))
 
     @classmethod
-    def load(self, emails: List) -> List:
+    def load(cls, emails: List) -> List:
         return [Email(e) for e in list(filter(lambda e: re.fullmatch(EMAIL_REGEX, e), emails))]
 
     def resolved(self) -> bool:
         return self.user is not None
 
     def name(self):
-        if self.user:
-            return self.user.name
-
-        return None
+        return self.user.name if self.user else None
 
     def username(self):
-        if self.user:
-            return self.user.login
-
-        return None
+        return self.user.login if self.user else None
 
     def profile_url(self):
-        if self.user:
-            return self.user.html_url
-
-        return None
+        return self.user.html_url if self.user else None
 
     # XXX Improve me
     def as_headers(self):
